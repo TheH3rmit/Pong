@@ -9,32 +9,31 @@ public class EnemyPaddle : Paddle
 
     private void FixedUpdate()
     {
-        if (this.ball.velocity.x > 0.0f)
+        //needs revisit as it is not working as intended
+        if (ball.velocity.x > 0f)
         {
-            if(ball.position.y> this.transform.position.y)
+            // Move the paddle in the direction of the ball to track it
+            if (ball.position.y > _rigidbody2D.position.y)
             {
-                _rigidbody2D.AddForce(Vector2.up * moveSpeedPublic,ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.up * moveSpeedPublic);
             }
-            else if (ball.position.y < this.transform.position.y)
+            else if (ball.position.y < _rigidbody2D.position.y)
             {
-                _rigidbody2D.AddForce(Vector2.down * moveSpeedPublic, ForceMode2D.Impulse);
-            }
-            else if (ball.position.y == this.transform.position.y)
-            {
-                _rigidbody2D.AddForce(-_rigidbody2D.velocity.normalized * moveSpeedPublic, ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.down * moveSpeedPublic);
             }
         }
         else
         {
-            if (_rigidbody2D.position.y > 0.0f)
+            // Move towards the center of the field and idle there until the
+            // ball starts coming towards the paddle again
+            if (_rigidbody2D.position.y > 0f)
             {
-                _rigidbody2D.AddForce(Vector2.down * moveSpeedPublic, ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.down * moveSpeedPublic);
             }
-            else if (_rigidbody2D.position.y < 0.0f)
+            else if (_rigidbody2D.position.y < 0f)
             {
-                _rigidbody2D.AddForce(Vector2.up * moveSpeedPublic, ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.up * moveSpeedPublic);
             }
-            _rigidbody2D.AddForce(-_rigidbody2D.velocity.normalized * moveSpeedPublic, ForceMode2D.Impulse);
         }
     }
 }
